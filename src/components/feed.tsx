@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useState } from "react"
@@ -48,7 +46,7 @@ export function Feed() {
       </Card>
 
       <Tabs defaultValue="for-you" className="mb-6">
-        <TabsList className="grid w-full grid-cols-2 rounded-full">
+        <TabsList className="grid w-full grid-cols-2 rounded-full p-1">
           <TabsTrigger value="for-you" onClick={() => setActiveTab("for-you")} className="rounded-full">
             For You
           </TabsTrigger>

@@ -1,14 +1,11 @@
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { MessageConversation } from "@/components/message-conversation";
-import { notFound } from "next/navigation";
-import { conversations } from "@/lib/mock-data";
+import { SiteHeader } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer"
+import { MessageConversation } from "@/components/message-conversation"
+import { notFound } from "next/navigation"
+import { conversations } from "@/lib/mock-data"
 
-export default async function ConversationPage(props: {
-    params: Promise<{ id: string }>;
-}) {
+export default async function ConversationPage(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
-
     const conversation = conversations.find((conv) => conv.id === params.id);
 
     if (!conversation) {
@@ -25,3 +22,4 @@ export default async function ConversationPage(props: {
         </div>
     );
 }
+

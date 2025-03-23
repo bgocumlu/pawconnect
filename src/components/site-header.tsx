@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Home, MessageSquare, PawPrintIcon as Paw, Search, MapPin, Sun, Moon } from "lucide-react"
+import { Home, PawPrintIcon as Paw, Search, MapPin, Sun, Moon, Heart, Stethoscope } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useState, useEffect } from "react"
@@ -20,15 +20,17 @@ export function SiteHeader() {
 
   useEffect(() => {
     // Check if user prefers dark mode
-    const isDark =
-      localStorage.getItem("theme") === "dark" ||
-      (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    if (typeof window !== "undefined") {
+      const isDark =
+        localStorage.getItem("theme") === "dark" ||
+        (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)
 
-    setIsDarkMode(isDark)
-    if (isDark) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
+      setIsDarkMode(isDark)
+      if (isDark) {
+        document.documentElement.classList.add("dark")
+      } else {
+        document.documentElement.classList.remove("dark")
+      }
     }
   }, [])
 
@@ -50,9 +52,14 @@ export function SiteHeader() {
       icon: Home,
     },
     {
+      name: "Adoption",
+      href: "/adoption",
+      icon: Paw,
+    },
+    {
       name: "Mating",
       href: "/mating",
-      icon: Paw,
+      icon: Heart,
     },
     {
       name: "Walk Buddy",
@@ -60,9 +67,9 @@ export function SiteHeader() {
       icon: MapPin,
     },
     {
-      name: "Messages",
-      href: "/messages",
-      icon: MessageSquare,
+      name: "Vets",
+      href: "/vets",
+      icon: Stethoscope,
     },
   ]
 
@@ -71,7 +78,7 @@ export function SiteHeader() {
       <div className="container flex h-16 items-center">
         <div className="flex items-center mr-4">
           <Link href="/" className="flex items-center space-x-2">
-            <Paw className="h-7 w-7 text-primary animate-paw-bounce" />
+            <Paw className="h-7 w-7 text-primary" />
             <span className="font-bold text-xl hidden sm:inline-block">PawConnect</span>
           </Link>
         </div>
@@ -164,6 +171,9 @@ export function SiteHeader() {
             <DropdownMenuContent align="end" className="rounded-xl">
               <DropdownMenuItem asChild>
                 <Link href="/profile/user1">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/messages">Messages</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/settings">Settings</Link>

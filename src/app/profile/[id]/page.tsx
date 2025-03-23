@@ -1,16 +1,12 @@
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { UserProfile } from "@/components/user-profile";
-import { notFound } from "next/navigation";
-import { users } from "@/lib/mock-data";
+import { SiteHeader } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer"
+import { UserProfile } from "@/components/user-profile"
+import { notFound } from "next/navigation"
+import { users } from "@/lib/mock-data"
 
-export default async function ProfilePage(props: {
-    params: Promise<{ id: string }>;
-}) {
+export default async function ProfilePage(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
-    const user = users.find(
-        (user) => user.id === (params as { id: string }).id
-    );
+    const user = users.find((user) => user.id === params.id);
 
     if (!user) {
         notFound();
@@ -26,3 +22,4 @@ export default async function ProfilePage(props: {
         </div>
     );
 }
+

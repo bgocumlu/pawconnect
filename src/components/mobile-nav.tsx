@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, MessageCircle, PawPrintIcon as Paw, MapPin, User } from "lucide-react"
+import { Home, PawPrintIcon as Paw, MapPin, Heart, Stethoscope } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -15,8 +15,8 @@ export function MobileNav() {
       icon: Home,
     },
     {
-      name: "Mating",
-      href: "/mating",
+      name: "Adoption",
+      href: "/adoption",
       icon: Paw,
     },
     {
@@ -25,14 +25,14 @@ export function MobileNav() {
       icon: MapPin,
     },
     {
-      name: "Messages",
-      href: "/messages",
-      icon: MessageCircle,
+      name: "Mating",
+      href: "/mating",
+      icon: Heart,
     },
     {
-      name: "Profile",
-      href: "/profile/user1",
-      icon: User,
+      name: "Vets",
+      href: "/vets",
+      icon: Stethoscope,
     },
   ]
 
@@ -51,7 +51,7 @@ export function MobileNav() {
                 isActive ? "text-primary" : "text-muted-foreground hover:text-foreground",
               )}
             >
-              <item.icon className={cn("h-5 w-5 mb-1", isActive && "animate-paw-bounce")} />
+              <item.icon className={cn("h-5 w-5 mb-1", isActive ? "text-primary" : "")} />
               <span className="text-xs font-medium">{item.name}</span>
             </Link>
           )
