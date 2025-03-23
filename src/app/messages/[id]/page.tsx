@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { notFound } from "next/navigation";
@@ -7,11 +5,11 @@ import { conversations } from "@/lib/mock-data";
 import { MessageConversation } from "@/components/message-conversation";
 
 interface PageProps {
-    params: { id: string };
+    params: Promise<{ id: string }>; // If params is a Promise
 }
 
-export default function MessagePage({ params }: PageProps) {
-    const { id } = params;
+export default async function MessagePage({ params }: PageProps) {
+    const { id } = await params; // Await the params if it's a Promise
 
     const conversation = conversations.find((conv) => conv.id === id);
 
