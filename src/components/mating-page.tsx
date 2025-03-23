@@ -100,7 +100,7 @@ export function MatingPage() {
                                 >
                                     <SelectTrigger
                                         id="species"
-                                        className="rounded-full"
+                                        className="rounded-full w-full"
                                     >
                                         <SelectValue placeholder="Any species" />
                                     </SelectTrigger>
@@ -149,7 +149,7 @@ export function MatingPage() {
                                 >
                                     <SelectTrigger
                                         id="gender"
-                                        className="rounded-full"
+                                        className="rounded-full w-full"
                                     >
                                         <SelectValue placeholder="Any gender" />
                                     </SelectTrigger>

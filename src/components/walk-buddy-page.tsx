@@ -148,7 +148,7 @@ function FindBuddies() {
                             <Select value={petType} onValueChange={setPetType}>
                                 <SelectTrigger
                                     id="petType"
-                                    className="rounded-full"
+                                    className="rounded-full w-full"
                                 >
                                     <SelectValue placeholder="Any pet type" />
                                 </SelectTrigger>

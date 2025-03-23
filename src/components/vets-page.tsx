@@ -159,7 +159,7 @@ export function VetsPage() {
                                     >
                                         <SelectTrigger
                                             id="specialty"
-                                            className="rounded-full"
+                                            className="rounded-full w-full"
                                         >
                                             <SelectValue placeholder="Any specialty" />
                                         </SelectTrigger>
@@ -394,9 +394,10 @@ export function VetsPage() {
                                         Map View Coming Soon
                                     </h3>
                                     <p className="text-muted-foreground max-w-md mx-auto">
-                                        We&apos;re working on an interactive map to
-                                        help you find veterinarians near you. In
-                                        the meantime, please use the list view.
+                                        We&apos;re working on an interactive map
+                                        to help you find veterinarians near you.
+                                        In the meantime, please use the list
+                                        view.
                                     </p>
                                 </div>
                             </div>

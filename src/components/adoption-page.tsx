@@ -150,7 +150,7 @@ export function AdoptionPage() {
                                     >
                                         <SelectTrigger
                                             id="species"
-                                            className="rounded-full"
+                                            className="rounded-full w-full"
                                         >
                                             <SelectValue placeholder="Any species" />
                                         </SelectTrigger>
@@ -184,7 +184,7 @@ export function AdoptionPage() {
                                     >
                                         <SelectTrigger
                                             id="age"
-                                            className="rounded-full"
+                                            className="rounded-full w-full"
                                         >
                                             <SelectValue placeholder="Any age" />
                                         </SelectTrigger>
@@ -218,7 +218,7 @@ export function AdoptionPage() {
                                     >
                                         <SelectTrigger
                                             id="gender"
-                                            className="rounded-full"
+                                            className="rounded-full w-full"
                                         >
                                             <SelectValue placeholder="Any gender" />
                                         </SelectTrigger>
@@ -448,7 +448,7 @@ export function AdoptionPage() {
                                         <Select>
                                             <SelectTrigger
                                                 id="pet-species"
-                                                className="rounded-full"
+                                                className="rounded-full w-full"
                                             >
                                                 <SelectValue placeholder="Select species" />
                                             </SelectTrigger>
@@ -501,7 +501,7 @@ export function AdoptionPage() {
                                         <Select>
                                             <SelectTrigger
                                                 id="pet-gender"
-                                                className="rounded-full"
+                                                className="rounded-full w-full"
                                             >
                                                 <SelectValue placeholder="Select gender" />
                                             </SelectTrigger>
