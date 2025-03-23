@@ -4,14 +4,14 @@ import { notFound } from "next/navigation";
 import { conversations } from "@/lib/mock-data";
 import { MessageConversation } from "@/components/message-conversation";
 
-interface PageProps {
-    params: Promise<{ id: string }>; // If params is a Promise
-}
+ import { useParams } from "next/navigation";
 
-export default async function MessagePage({ params }: PageProps) {
-    const { id } = params as unknown as { id: string };
+export default function MessagePage() {
+    const { id }: { id: string[] } = useParams();
 
-    const conversation = conversations.find((conv) => conv.id === id);
+    const paramsId = id[1];
+
+    const conversation = conversations.find((conv) => conv.id === paramsId);
 
     if (!conversation) {
         notFound();
