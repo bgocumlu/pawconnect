@@ -5,8 +5,7 @@ import { notFound } from "next/navigation"
 import { users } from "@/lib/mock-data"
 
 export default function ProfilePage({ params }: { params: { id: string } }) {
-  const { id: paramsId } = params; // Destructure params directly
-  const user = users.find((user) => user.id === paramsId);
+  const user = users.find((user) => user.id === params.id);
 
   if (!user) {
     notFound();
