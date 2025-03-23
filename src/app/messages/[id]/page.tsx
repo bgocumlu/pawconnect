@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export default async function MessagePage({ params }: PageProps) {
-    const { id } = await params; // Await the params if it's a Promise
+    const { id } = params as unknown as { id: string };
 
     const conversation = conversations.find((conv) => conv.id === id);
 
