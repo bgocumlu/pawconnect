@@ -1,10 +1,11 @@
+"use client";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { notFound } from "next/navigation";
 import { conversations } from "@/lib/mock-data";
 import { MessageConversation } from "@/components/message-conversation";
 
- import { useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 export default function MessagePage() {
     const { id }: { id: string[] } = useParams();
