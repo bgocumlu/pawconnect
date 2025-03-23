@@ -4,12 +4,12 @@ import { UserProfile } from "@/components/user-profile"
 import { notFound } from "next/navigation"
 import { users } from "@/lib/mock-data"
 
-export default async function ProfilePage({ params }: { params: { id: string } }) {
-  const { id: paramsId } = await params;
+export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: paramsId } = await params; // Await the params promise
   const user = users.find((user) => user.id === paramsId);
 
   if (!user) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -20,6 +20,6 @@ export default async function ProfilePage({ params }: { params: { id: string } }
       </main>
       <SiteFooter />
     </div>
-  )
+  );
 }
 
