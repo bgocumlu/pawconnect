@@ -1,18 +1,15 @@
-"use client";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { MessageConversation } from "@/components/message-conversation";
 import { notFound } from "next/navigation";
 import { conversations } from "@/lib/mock-data";
-import { MessageConversation } from "@/components/message-conversation";
 
-import { useParams } from "next/navigation";
+export default async function ConversationPage(props: {
+    params: Promise<{ id: string }>;
+}) {
+    const params = await props.params;
 
-export default function MessagePage() {
-    const { id }: { id: string[] } = useParams();
-
-    const paramsId = id[1];
-
-    const conversation = conversations.find((conv) => conv.id === paramsId);
+    const conversation = conversations.find((conv) => conv.id === params.id);
 
     if (!conversation) {
         notFound();
