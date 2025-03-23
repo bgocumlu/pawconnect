@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 import { users } from "@/lib/mock-data"
 
 export default function ProfilePage({ params }: { params: { id: string } }) {
-  const user = users.find((user) => user.id === params.id);
+  const user = users.find((user) => user.id === (params as { id: string }).id);
 
   if (!user) {
     notFound();
