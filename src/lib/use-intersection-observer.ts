@@ -13,7 +13,7 @@ export function useIntersectionObserver({
   rootMargin = "0px",
   root = null,
 }: UseIntersectionObserverProps = {}): {
-  ref: RefObject<Element>
+  ref: RefObject<Element | null>
   isIntersecting: boolean
   hasIntersected: boolean
 } {
