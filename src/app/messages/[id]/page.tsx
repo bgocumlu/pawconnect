@@ -1,11 +1,17 @@
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { MessageConversation } from "@/components/message-conversation"
 import { notFound } from "next/navigation"
 import { conversations } from "@/lib/mock-data"
+import { MessageConversation } from "@/components/message-conversation"
 
-export default function ConversationPage({ params }: { params: { id: string } }) {
-  const conversation = conversations.find((conv) => conv.id === params.id)
+interface PageProps {
+  params: { id: string }
+}
+
+export default function MessagePage({ params }: PageProps) {
+  const { id } = params;
+  
+  const conversation = conversations.find((conv) => conv.id === id)
 
   if (!conversation) {
     notFound()
