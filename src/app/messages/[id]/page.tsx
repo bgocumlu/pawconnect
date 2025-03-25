@@ -4,8 +4,12 @@ import { MessageConversation } from "@/components/message-conversation"
 import { notFound } from "next/navigation"
 import { conversations } from "@/lib/mock-data"
 
-export default async function ConversationPage(props: { params: Promise<{ id: string }> }) {
-    const params = await props.params;
+import { use } from "react";
+
+type Params = Promise<{ id: string }>;
+
+export default function ConversationPage(props: { params: Params }) {
+    const params = use(props.params);
     const conversation = conversations.find((conv) => conv.id === params.id);
 
     if (!conversation) {

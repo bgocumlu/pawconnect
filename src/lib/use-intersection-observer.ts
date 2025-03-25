@@ -13,7 +13,7 @@ export function useIntersectionObserver({
   rootMargin = "0px",
   root = null,
 }: UseIntersectionObserverProps = {}): {
-  ref: RefObject<Element | null>
+  ref: RefObject<Element>
   isIntersecting: boolean
   hasIntersected: boolean
 } {
@@ -22,30 +22,47 @@ export function useIntersectionObserver({
   const ref = useRef<Element>(null)
 
   useEffect(() => {
-    const currentRef = ref.current
+    // Early return if browser doesn't support IntersectionObserver
+    if (typeof IntersectionObserver === "undefined" || !ref.current) {
+      return () => {}
+    }
 
-    if (!currentRef) return
+    let observer: IntersectionObserver | null = null
+    let isMounted = true
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setIsIntersecting(true)
-          setHasIntersected(true)
-        } else {
-          setIsIntersecting(false)
-        }
-      },
-      {
-        threshold,
-        rootMargin,
-        root,
-      },
-    )
+    try {
+      observer = new IntersectionObserver(
+        (entries) => {
+          // Only update state if component is still mounted
+          if (isMounted && entries[0]) {
+            if (entries[0].isIntersecting) {
+              setIsIntersecting(true)
+              setHasIntersected(true)
+            } else {
+              setIsIntersecting(false)
+            }
+          }
+        },
+        {
+          threshold,
+          rootMargin,
+          root,
+        },
+      )
 
-    observer.observe(currentRef)
+      const currentRef = ref.current
+      if (currentRef) {
+        observer.observe(currentRef)
+      }
+    } catch (error) {
+      console.error("Error setting up intersection observer:", error)
+    }
 
     return () => {
-      observer.disconnect()
+      isMounted = false
+      if (observer) {
+        observer.disconnect()
+      }
     }
   }, [threshold, rootMargin, root])
 

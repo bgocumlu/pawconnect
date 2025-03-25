@@ -69,65 +69,99 @@ export const users = [
   },
 ]
 
-// Mock data for posts
+// Modify the posts array to make For You and Following sections more distinct
 export const posts = [
-  {
-    id: "post1",
-    user: {
-      id: "user1",
-      name: "Alex Johnson",
-      avatar: "/placeholder.svg",
+    {
+        id: "post4",
+        user: {
+            id: "user4",
+            name: "Emma Davis",
+            avatar: "/placeholder.svg",
+        },
+        content:
+            "Just adopted this beautiful rescue puppy! Meet Bella, our newest family member. She's already made herself at home. ❤️",
+        image: "/placeholder.svg?height=400&width=600",
+        likes: 103,
+        comments: 31,
+        timeAgo: "3 hours ago",
+        isFollowing: false,
     },
-    content: "Max had the best time at the dog park today! Made so many new friends. #DogsOfPawConnect",
-    image: "/placeholder.svg?height=400&width=600",
-    likes: 42,
-    comments: 7,
-    timeAgo: "2 hours ago",
-    isFollowing: true,
-  },
-  {
-    id: "post2",
-    user: {
-      id: "user2",
-      name: "Samantha Lee",
-      avatar: "/placeholder.svg",
+    {
+        id: "post1",
+        user: {
+            id: "user3",
+            name: "Mike Wilson",
+            avatar: "/placeholder.svg",
+        },
+        content:
+            "Anyone have recommendations for a good vet in the Chicago area? My rabbit needs a checkup.",
+        image: null,
+        likes: 15,
+        comments: 23,
+        timeAgo: "1 day ago",
+        isFollowing: false,
     },
-    content: "Oliver is enjoying his new cat tree! Best purchase ever. #CatsOfPawConnect",
-    image: "/placeholder.svg?height=400&width=600",
-    likes: 78,
-    comments: 12,
-    timeAgo: "5 hours ago",
-    isFollowing: true,
-  },
-  {
-    id: "post3",
-    user: {
-      id: "user3",
-      name: "Mike Wilson",
-      avatar: "/placeholder.svg",
+    {
+        id: "post2",
+        user: {
+            id: "user1",
+            name: "Alex Johnson",
+            avatar: "/placeholder.svg",
+        },
+        content:
+            "Max had the best time at the dog park today! Made so many new friends. #DogsOfPawConnect",
+        image: "/placeholder.svg?height=400&width=600",
+        likes: 42,
+        comments: 7,
+        timeAgo: "4 hours ago",
+        isFollowing: true,
     },
-    content: "Anyone have recommendations for a good vet in the Chicago area? My rabbit needs a checkup.",
-    image: null,
-    likes: 15,
-    comments: 23,
-    timeAgo: "1 day ago",
-    isFollowing: false,
-  },
-  {
-    id: "post4",
-    user: {
-      id: "user1",
-      name: "Alex Johnson",
-      avatar: "/placeholder.svg",
+    {
+        id: "post3",
+        user: {
+            id: "user2",
+            name: "Samantha Lee",
+            avatar: "/placeholder.svg",
+        },
+        content:
+            "Oliver is enjoying his new cat tree! Best purchase ever. #CatsOfPawConnect",
+        image: "/placeholder.svg?height=400&width=600",
+        likes: 78,
+        comments: 12,
+        timeAgo: "5 hours ago",
+        isFollowing: true,
     },
-    content: "Luna is not impressed with her new toy. Back to the drawing board!",
-    image: "/placeholder.svg?height=400&width=600",
-    likes: 36,
-    comments: 4,
-    timeAgo: "2 days ago",
-    isFollowing: true,
-  },
-]
+    {
+        id: "post5",
+        user: {
+            id: "user1",
+            name: "Alex Johnson",
+            avatar: "/placeholder.svg",
+        },
+        content:
+            "Luna is not impressed with her new toy. Back to the drawing board!",
+        image: "/placeholder.svg?height=400&width=600",
+        likes: 36,
+        comments: 4,
+        timeAgo: "2 days ago",
+        isFollowing: true,
+    },
+    {
+        id: "post6",
+        user: {
+            id: "user5",
+            name: "David Chen",
+            avatar: "/placeholder.svg",
+        },
+        content:
+            "My cat figured out how to open the treat drawer. I'm both impressed and concerned about my future food security.",
+        image: "/placeholder.svg?height=400&width=600",
+        likes: 67,
+        comments: 19,
+        timeAgo: "6 hours ago",
+        isFollowing: false,
+    },
+];
 
 // Mock data for mating pets
 export const matingPets = [
@@ -952,6 +986,164 @@ export const veterinarians = [
     ],
     description:
       "Sunset Pet Wellness Center focuses on preventative care to keep your pets healthy throughout their lives. We emphasize client education and early disease detection.",
+  },
+]
+
+// Adding marketplace items to the existing mock-data.ts file
+export const marketplaceItems = [
+  {
+    id: "item1",
+    title: "Premium Dog Bed - Memory Foam",
+    price: 89.99,
+    description: "Orthopedic memory foam dog bed, perfect for medium to large dogs. Removable, washable cover.",
+    category: "beds",
+    condition: "new",
+    location: "San Francisco, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user1",
+      name: "Alex Johnson",
+      rating: 4.8,
+    },
+    postedDate: "2 days ago",
+    tags: ["memory foam", "orthopedic", "large dogs"],
+  },
+  {
+    id: "item2",
+    title: "Cat Tree with Scratching Posts",
+    price: 65.0,
+    description: "Multi-level cat tree with sisal scratching posts, plush perches, and a cozy hideaway.",
+    category: "furniture",
+    condition: "likeNew",
+    location: "Oakland, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user2",
+      name: "Samantha Lee",
+      rating: 4.9,
+    },
+    postedDate: "1 week ago",
+    tags: ["cat tree", "scratching post", "multi-level"],
+  },
+  {
+    id: "item3",
+    title: "Automatic Pet Feeder",
+    price: 45.5,
+    description: "Programmable automatic pet feeder with timer. Dispenses up to 4 meals per day.",
+    category: "accessories",
+    condition: "good",
+    location: "San Jose, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user3",
+      name: "Mike Wilson",
+      rating: 4.6,
+    },
+    postedDate: "3 days ago",
+    tags: ["automatic", "feeder", "timer"],
+  },
+  {
+    id: "item4",
+    title: "Premium Organic Dog Treats",
+    price: 18.99,
+    description:
+      "Handmade organic dog treats. No preservatives or artificial ingredients. Great for dogs with allergies.",
+    category: "food",
+    condition: "new",
+    location: "Berkeley, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user4",
+      name: "Emma Davis",
+      rating: 5.0,
+    },
+    postedDate: "1 day ago",
+    tags: ["organic", "treats", "handmade", "allergen-free"],
+  },
+  {
+    id: "item5",
+    title: "Interactive Dog Puzzle Toy",
+    price: 24.95,
+    description: "Mental stimulation puzzle toy for dogs. Helps prevent boredom and encourages problem-solving skills.",
+    category: "toys",
+    condition: "likeNew",
+    location: "San Francisco, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user5",
+      name: "David Chen",
+      rating: 4.7,
+    },
+    postedDate: "5 days ago",
+    tags: ["interactive", "puzzle", "mental stimulation"],
+  },
+  {
+    id: "item6",
+    title: "Professional Pet Grooming Kit",
+    price: 79.99,
+    description: "Complete professional grooming kit with clippers, scissors, combs, and nail trimmers.",
+    category: "grooming",
+    condition: "new",
+    location: "Marin, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user1",
+      name: "Alex Johnson",
+      rating: 4.8,
+    },
+    postedDate: "1 week ago",
+    tags: ["grooming", "professional", "clippers"],
+  },
+  {
+    id: "item7",
+    title: "Cat Carrier - Airline Approved",
+    price: 35.0,
+    description: "Soft-sided, airline-approved pet carrier for cats and small dogs. Comfortable and secure.",
+    category: "accessories",
+    condition: "good",
+    location: "Palo Alto, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user2",
+      name: "Samantha Lee",
+      rating: 4.9,
+    },
+    postedDate: "2 weeks ago",
+    tags: ["carrier", "travel", "airline approved"],
+  },
+  {
+    id: "item8",
+    title: "Dog Training Clicker Set",
+    price: 12.99,
+    description: "Set of 3 training clickers with wrist straps. Perfect for positive reinforcement training.",
+    category: "accessories",
+    condition: "new",
+    location: "San Francisco, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user3",
+      name: "Mike Wilson",
+      rating: 4.6,
+    },
+    postedDate: "4 days ago",
+    tags: ["training", "clicker", "positive reinforcement"],
+  },
+  {
+    id: "item9",
+    title: "Premium Catnip Toys - Set of 5",
+    price: 15.5,
+    description: "Handmade catnip toys in various shapes. Made with organic catnip and durable materials.",
+    category: "toys",
+    condition: "new",
+    location: "Oakland, CA",
+    image: "/placeholder.svg?height=200&width=300",
+    seller: {
+      id: "user4",
+      name: "Emma Davis",
+      rating: 5.0,
+    },
+    postedDate: "3 days ago",
+    tags: ["catnip", "toys", "organic", "handmade"],
   },
 ]
 

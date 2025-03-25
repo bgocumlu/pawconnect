@@ -9,82 +9,90 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
-import { Heart, Upload, Calendar, MapPin, Mail, PawPrintIcon as Paw, ChevronDown, ChevronUp } from "lucide-react"
+import { ShoppingBag, Search, Filter, Tag, MapPin, Upload, Heart, ChevronDown, ChevronUp } from "lucide-react"
 import Image from "next/image"
-import { adoptionPets } from "@/lib/mock-data"
+import { marketplaceItems } from "@/lib/mock-data"
 
-export function AdoptionPage() {
-  const [activeTab, setActiveTab] = useState("find")
+export function MarketplacePage() {
+  const [activeTab, setActiveTab] = useState("browse")
   const [filters, setFilters] = useState({
-    species: "",
-    age: "",
-    gender: "",
+    category: "",
+    priceRange: "",
+    condition: "",
     location: "",
-    urgent: false,
   })
-  const [filteredPets, setFilteredPets] = useState(adoptionPets)
-  const [query, setQuery] = useState("")
+  const [filteredItems, setFilteredItems] = useState(marketplaceItems)
+  const [searchQuery, setSearchQuery] = useState("")
   const [isFilterExpanded, setIsFilterExpanded] = useState(false)
 
   const handleFilterChange = (key: string, value: any) => {
     const newFilters = { ...filters, [key]: value }
     setFilters(newFilters)
+    applyFilters(newFilters, searchQuery)
+  }
 
-    // Apply filters
-    let results = adoptionPets
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    applyFilters(filters, query)
+  }
+
+  const applyFilters = (currentFilters: any, query: string) => {
+    let results = marketplaceItems
 
     // Apply search query
     if (query) {
       const searchLower = query.toLowerCase()
       results = results.filter(
         (item) =>
-          item.title?.toLowerCase().includes(searchLower) || item.description.toLowerCase().includes(searchLower),
+          item.title.toLowerCase().includes(searchLower) || item.description.toLowerCase().includes(searchLower),
       )
     }
 
-    // Apply species filter
-    if (newFilters.species && newFilters.species !== "all") {
-      results = results.filter((pet) => pet.species.toLowerCase() === newFilters.species.toLowerCase())
+    // Apply category filter
+    if (currentFilters.category && currentFilters.category !== "all") {
+      results = results.filter((item) => item.category === currentFilters.category)
     }
 
-    // Apply age filter
-    if (newFilters.age && newFilters.age !== "all") {
-      if (newFilters.age === "puppy-kitten") {
-        results = results.filter((pet) => pet.age <= 1)
-      } else if (newFilters.age === "young") {
-        results = results.filter((pet) => pet.age > 1 && pet.age <= 3)
-      } else if (newFilters.age === "adult") {
-        results = results.filter((pet) => pet.age > 3 && pet.age <= 7)
-      } else if (newFilters.age === "senior") {
-        results = results.filter((pet) => pet.age > 7)
+    // Apply price range filter
+    if (currentFilters.priceRange && currentFilters.priceRange !== "all") {
+      switch (currentFilters.priceRange) {
+        case "under25":
+          results = results.filter((item) => item.price < 25)
+          break
+        case "25to50":
+          results = results.filter((item) => item.price >= 25 && item.price <= 50)
+          break
+        case "50to100":
+          results = results.filter((item) => item.price > 50 && item.price <= 100)
+          break
+        case "over100":
+          results = results.filter((item) => item.price > 100)
+          break
       }
     }
 
-    // Apply gender filter
-    if (newFilters.gender && newFilters.gender !== "all") {
-      results = results.filter((pet) => pet.gender === newFilters.gender)
+    // Apply condition filter
+    if (currentFilters.condition && currentFilters.condition !== "all") {
+      results = results.filter((item) => item.condition === currentFilters.condition)
     }
 
-    if (newFilters.location) {
-      results = results.filter((pet) => pet.location.toLowerCase().includes(newFilters.location.toLowerCase()))
+    // Apply location filter
+    if (currentFilters.location) {
+      results = results.filter((item) => item.location.toLowerCase().includes(currentFilters.location.toLowerCase()))
     }
 
-    if (newFilters.urgent) {
-      results = results.filter((pet) => pet.urgent)
-    }
-
-    setFilteredPets(results)
+    setFilteredItems(results)
   }
 
   const resetFilters = () => {
     setFilters({
-      species: "",
-      age: "",
-      gender: "",
+      category: "",
+      priceRange: "",
+      condition: "",
       location: "",
-      urgent: false,
     })
-    setFilteredPets(adoptionPets)
+    setSearchQuery("")
+    setFilteredItems(marketplaceItems)
   }
 
   const toggleFilters = () => {
@@ -92,46 +100,45 @@ export function AdoptionPage() {
   }
 
   // Count active filters
-  const activeFilterCount = Object.values(filters).filter(
-    (value) => value !== "" && value !== false && value !== "all",
-  ).length
+  const activeFilterCount =
+    Object.values(filters).filter((value) => value !== "" && value !== "all").length + (searchQuery ? 1 : 0)
 
   return (
       <div className="bg-paw-pattern">
           <div className="mb-8">
               <h1 className="text-3xl font-bold mb-6 flex items-center">
-                  <Paw className="mr-2 h-7 w-7 text-primary" />
-                  Pet Adoption
+                  <ShoppingBag className="mr-2 h-7 w-7 text-primary" />
+                  Pet Marketplace
               </h1>
               <p className="text-muted-foreground mb-4">
-                  Find your perfect companion or help a pet find their forever
-                  home. Browse available pets or list your pet for adoption.
+                  Buy and sell pet supplies, accessories, and more. Connect with
+                  other pet owners in your area.
               </p>
           </div>
 
-          <Tabs defaultValue="find" className="mb-8">
+          <Tabs defaultValue="browse" className="mb-8">
               <TabsList className="grid w-full grid-cols-2 rounded-full p-1">
                   <TabsTrigger
-                      value="find"
-                      onClick={() => setActiveTab("find")}
+                      value="browse"
+                      onClick={() => setActiveTab("browse")}
                       className="rounded-full"
                   >
-                      Find a Pet
+                      Browse Items
                   </TabsTrigger>
                   <TabsTrigger
-                      value="list"
-                      onClick={() => setActiveTab("list")}
+                      value="sell"
+                      onClick={() => setActiveTab("sell")}
                       className="rounded-full"
                   >
-                      List for Adoption
+                      Sell Item
                   </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="find" className="mt-3">
+              <TabsContent value="browse" className="mt-3">
                   <Card className="mb-3 rounded-2xl border-2 shadow-xs hover:shadow-md transition-shadow duration-300">
                       <CardHeader className="">
                           <div className="flex justify-between items-center">
-                              <CardTitle>Filter Pets</CardTitle>
+                              <CardTitle>Find Items</CardTitle>
                               <Button
                                   variant="outline"
                                   size="sm"
@@ -140,7 +147,7 @@ export function AdoptionPage() {
                               >
                                   {activeFilterCount > 0 && (
                                       <Badge
-                                          variant="default"
+                                          variant="primary"
                                           className="mr-1 rounded-full h-5 w-5 p-0 flex items-center justify-center text-xs"
                                       >
                                           {activeFilterCount}
@@ -161,104 +168,137 @@ export function AdoptionPage() {
 
                       {isFilterExpanded && (
                           <CardContent>
-                              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+                                  <div className="space-y-2 sm:col-span-2">
+                                      <Label htmlFor="search">Search</Label>
+                                      <div className="relative">
+                                          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                          <Input
+                                              id="search"
+                                              placeholder="Search for items..."
+                                              className="pl-10 rounded-full"
+                                              value={searchQuery}
+                                              onChange={(e) =>
+                                                  handleSearch(e.target.value)
+                                              }
+                                          />
+                                      </div>
+                                  </div>
+
                                   <div className="space-y-2">
-                                      <Label htmlFor="species">Species</Label>
+                                      <Label htmlFor="category">Category</Label>
                                       <Select
-                                          value={filters.species}
+                                          value={filters.category}
                                           onValueChange={(value) =>
                                               handleFilterChange(
-                                                  "species",
+                                                  "category",
                                                   value
                                               )
                                           }
                                       >
                                           <SelectTrigger
-                                              id="species"
+                                              id="category"
                                               className="rounded-full w-full"
                                           >
-                                              <SelectValue placeholder="Any species" />
+                                              <SelectValue placeholder="All categories" />
                                           </SelectTrigger>
                                           <SelectContent className="rounded-xl">
                                               <SelectItem value="all">
-                                                  Any species
+                                                  All categories
                                               </SelectItem>
-                                              <SelectItem value="dog">
-                                                  Dog
+                                              <SelectItem value="food">
+                                                  Food & Treats
                                               </SelectItem>
-                                              <SelectItem value="cat">
-                                                  Cat
+                                              <SelectItem value="toys">
+                                                  Toys
                                               </SelectItem>
-                                              <SelectItem value="rabbit">
-                                                  Rabbit
+                                              <SelectItem value="accessories">
+                                                  Accessories
                                               </SelectItem>
-                                              <SelectItem value="bird">
-                                                  Bird
+                                              <SelectItem value="beds">
+                                                  Beds & Furniture
+                                              </SelectItem>
+                                              <SelectItem value="grooming">
+                                                  Grooming Supplies
+                                              </SelectItem>
+                                              <SelectItem value="health">
+                                                  Health & Wellness
                                               </SelectItem>
                                           </SelectContent>
                                       </Select>
                                   </div>
 
                                   <div className="space-y-2">
-                                      <Label htmlFor="age">Age</Label>
+                                      <Label htmlFor="price">Price Range</Label>
                                       <Select
-                                          value={filters.age}
+                                          value={filters.priceRange}
                                           onValueChange={(value) =>
-                                              handleFilterChange("age", value)
+                                              handleFilterChange(
+                                                  "priceRange",
+                                                  value
+                                              )
                                           }
                                       >
                                           <SelectTrigger
-                                              id="age"
+                                              id="price"
                                               className="rounded-full w-full"
                                           >
-                                              <SelectValue placeholder="Any age" />
+                                              <SelectValue placeholder="Any price" />
                                           </SelectTrigger>
                                           <SelectContent className="rounded-xl">
                                               <SelectItem value="all">
-                                                  Any age
+                                                  Any price
                                               </SelectItem>
-                                              <SelectItem value="puppy-kitten">
-                                                  Baby (0-1 year)
+                                              <SelectItem value="under25">
+                                                  Under $25
                                               </SelectItem>
-                                              <SelectItem value="young">
-                                                  Young (1-3 years)
+                                              <SelectItem value="25to50">
+                                                  $25 to $50
                                               </SelectItem>
-                                              <SelectItem value="adult">
-                                                  Adult (3-7 years)
+                                              <SelectItem value="50to100">
+                                                  $50 to $100
                                               </SelectItem>
-                                              <SelectItem value="senior">
-                                                  Senior (7+ years)
+                                              <SelectItem value="over100">
+                                                  Over $100
                                               </SelectItem>
                                           </SelectContent>
                                       </Select>
                                   </div>
 
                                   <div className="space-y-2">
-                                      <Label htmlFor="gender">Gender</Label>
+                                      <Label htmlFor="condition">
+                                          Condition
+                                      </Label>
                                       <Select
-                                          value={filters.gender}
+                                          value={filters.condition}
                                           onValueChange={(value) =>
                                               handleFilterChange(
-                                                  "gender",
+                                                  "condition",
                                                   value
                                               )
                                           }
                                       >
                                           <SelectTrigger
-                                              id="gender"
+                                              id="condition"
                                               className="rounded-full w-full"
                                           >
-                                              <SelectValue placeholder="Any gender" />
+                                              <SelectValue placeholder="Any condition" />
                                           </SelectTrigger>
                                           <SelectContent className="rounded-xl">
                                               <SelectItem value="all">
-                                                  Any gender
+                                                  Any condition
                                               </SelectItem>
-                                              <SelectItem value="Male">
-                                                  Male
+                                              <SelectItem value="new">
+                                                  New
                                               </SelectItem>
-                                              <SelectItem value="Female">
-                                                  Female
+                                              <SelectItem value="likeNew">
+                                                  Like New
+                                              </SelectItem>
+                                              <SelectItem value="good">
+                                                  Good
+                                              </SelectItem>
+                                              <SelectItem value="fair">
+                                                  Fair
                                               </SelectItem>
                                           </SelectContent>
                                       </Select>
@@ -285,36 +325,11 @@ export function AdoptionPage() {
 
                                   <div className="space-y-2 flex items-end">
                                       <Button
-                                          variant={
-                                              filters.urgent
-                                                  ? "default"
-                                                  : "outline"
-                                          }
-                                          className="rounded-full h-10 px-4 w-full"
-                                          onClick={() =>
-                                              handleFilterChange(
-                                                  "urgent",
-                                                  !filters.urgent
-                                              )
-                                          }
-                                      >
-                                          <Heart
-                                              className={`h-4 w-4 mr-2 ${
-                                                  filters.urgent
-                                                      ? "fill-primary-foreground"
-                                                      : ""
-                                              }`}
-                                          />
-                                          Urgent Cases
-                                      </Button>
-                                  </div>
-
-                                  <div className="space-y-2 flex items-end">
-                                      <Button
                                           variant="outline"
-                                          className="rounded-full h-10 px-4 w-full"
+                                          className="rounded-full h-10 px-4 w-full flex items-center gap-2"
                                           onClick={resetFilters}
                                       >
+                                          <Filter className="h-4 w-4" />
                                           Reset Filters
                                       </Button>
                                   </div>
@@ -325,20 +340,36 @@ export function AdoptionPage() {
                       {!isFilterExpanded && activeFilterCount > 0 && (
                           <CardFooter className="pt-0 pb-4">
                               <div className="flex flex-wrap gap-2">
-                                  {filters.species &&
-                                      filters.species !== "all" && (
+                                  {searchQuery && (
+                                      <Badge
+                                          variant="outline"
+                                          className="rounded-full px-3 py-1 bg-background border-primary/20 text-foreground"
+                                      >
+                                          Search: {searchQuery}
+                                          <Button
+                                              variant="ghost"
+                                              size="icon"
+                                              className="h-4 w-4 ml-1 p-0 text-muted-foreground hover:text-foreground"
+                                              onClick={() => handleSearch("")}
+                                          >
+                                              ×
+                                          </Button>
+                                      </Badge>
+                                  )}
+                                  {filters.category &&
+                                      filters.category !== "all" && (
                                           <Badge
                                               variant="outline"
                                               className="rounded-full px-3 py-1 bg-background border-primary/20 text-foreground"
                                           >
-                                              Species: {filters.species}
+                                              Category: {filters.category}
                                               <Button
                                                   variant="ghost"
                                                   size="icon"
                                                   className="h-4 w-4 ml-1 p-0 text-muted-foreground hover:text-foreground"
                                                   onClick={() =>
                                                       handleFilterChange(
-                                                          "species",
+                                                          "category",
                                                           ""
                                                       )
                                                   }
@@ -347,45 +378,51 @@ export function AdoptionPage() {
                                               </Button>
                                           </Badge>
                                       )}
-                                  {filters.age && filters.age !== "all" && (
-                                      <Badge
-                                          variant="outline"
-                                          className="rounded-full px-3 py-1 bg-background border-primary/20 text-foreground"
-                                      >
-                                          Age:{" "}
-                                          {filters.age === "puppy-kitten"
-                                              ? "Baby"
-                                              : filters.age === "young"
-                                              ? "Young"
-                                              : filters.age === "adult"
-                                              ? "Adult"
-                                              : "Senior"}
-                                          <Button
-                                              variant="ghost"
-                                              size="icon"
-                                              className="h-4 w-4 ml-1 p-0 text-muted-foreground hover:text-foreground"
-                                              onClick={() =>
-                                                  handleFilterChange("age", "")
-                                              }
-                                          >
-                                              ×
-                                          </Button>
-                                      </Badge>
-                                  )}
-                                  {filters.gender &&
-                                      filters.gender !== "all" && (
+                                  {filters.priceRange &&
+                                      filters.priceRange !== "all" && (
                                           <Badge
                                               variant="outline"
                                               className="rounded-full px-3 py-1 bg-background border-primary/20 text-foreground"
                                           >
-                                              Gender: {filters.gender}
+                                              Price:{" "}
+                                              {filters.priceRange === "under25"
+                                                  ? "Under $25"
+                                                  : filters.priceRange ===
+                                                    "25to50"
+                                                  ? "$25-$50"
+                                                  : filters.priceRange ===
+                                                    "50to100"
+                                                  ? "$50-$100"
+                                                  : "Over $100"}
                                               <Button
                                                   variant="ghost"
                                                   size="icon"
                                                   className="h-4 w-4 ml-1 p-0 text-muted-foreground hover:text-foreground"
                                                   onClick={() =>
                                                       handleFilterChange(
-                                                          "gender",
+                                                          "priceRange",
+                                                          ""
+                                                      )
+                                                  }
+                                              >
+                                                  ×
+                                              </Button>
+                                          </Badge>
+                                      )}
+                                  {filters.condition &&
+                                      filters.condition !== "all" && (
+                                          <Badge
+                                              variant="outline"
+                                              className="rounded-full px-3 py-1 bg-background border-primary/20 text-foreground"
+                                          >
+                                              Condition: {filters.condition}
+                                              <Button
+                                                  variant="ghost"
+                                                  size="icon"
+                                                  className="h-4 w-4 ml-1 p-0 text-muted-foreground hover:text-foreground"
+                                                  onClick={() =>
+                                                      handleFilterChange(
+                                                          "condition",
                                                           ""
                                                       )
                                                   }
@@ -415,27 +452,6 @@ export function AdoptionPage() {
                                           </Button>
                                       </Badge>
                                   )}
-                                  {filters.urgent && (
-                                      <Badge
-                                          variant="outline"
-                                          className="rounded-full px-3 py-1 bg-background border-primary/20 text-foreground"
-                                      >
-                                          Urgent Only
-                                          <Button
-                                              variant="ghost"
-                                              size="icon"
-                                              className="h-4 w-4 ml-1 p-0 text-muted-foreground hover:text-foreground"
-                                              onClick={() =>
-                                                  handleFilterChange(
-                                                      "urgent",
-                                                      false
-                                                  )
-                                              }
-                                          >
-                                              ×
-                                          </Button>
-                                      </Badge>
-                                  )}
                                   {activeFilterCount > 0 && (
                                       <Button
                                           variant="ghost"
@@ -452,53 +468,50 @@ export function AdoptionPage() {
                   </Card>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {filteredPets.length > 0 ? (
-                          filteredPets.map((pet) => (
+                      {filteredItems.length > 0 ? (
+                          filteredItems.map((item) => (
                               <Card
-                                  key={pet.id}
-                                  className="pet-card group overflow-hidden"
+                                  key={item.id}
+                                  className="group overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-md"
                               >
                                   <div className="relative h-48 overflow-hidden">
                                       <Image
                                           src={
-                                              pet.image ||
+                                              item.image ||
                                               "/placeholder.svg?height=200&width=300"
                                           }
-                                          alt={pet.name}
+                                          alt={item.title}
                                           fill
                                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                                       />
-                                      <div className="absolute top-2 right-2 flex gap-2">
+                                      <div className="absolute top-2 right-2">
                                           <Badge
                                               variant={
-                                                  pet.gender === "Male"
+                                                  item.condition === "new"
                                                       ? "default"
                                                       : "secondary"
                                               }
                                               className="rounded-full px-3"
                                           >
-                                              {pet.gender}
+                                              {item.condition}
                                           </Badge>
-                                          {pet.urgent && (
-                                              <Badge
-                                                  variant="destructive"
-                                                  className="rounded-full px-3"
-                                              >
-                                                  Urgent
-                                              </Badge>
-                                          )}
                                       </div>
+                                      <Button
+                                          variant="secondary"
+                                          size="icon"
+                                          className="absolute top-2 left-2 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                      >
+                                          <Heart className="h-4 w-4" />
+                                      </Button>
                                   </div>
                                   <CardHeader>
                                       <div className="flex justify-between items-start">
                                           <div>
-                                              <CardTitle>{pet.name}</CardTitle>
-                                              <p className="text-sm text-muted-foreground">
-                                                  {pet.breed} • {pet.age}{" "}
-                                                  {pet.age === 1
-                                                      ? "year"
-                                                      : "years"}{" "}
-                                                  old
+                                              <CardTitle className="line-clamp-1">
+                                                  {item.title}
+                                              </CardTitle>
+                                              <p className="text-primary font-bold">
+                                                  ${item.price.toFixed(2)}
                                               </p>
                                           </div>
                                           <Badge
@@ -506,55 +519,32 @@ export function AdoptionPage() {
                                               className="rounded-full flex items-center gap-1"
                                           >
                                               <MapPin className="h-3 w-3" />
-                                              {pet.location.split(",")[0]}
+                                              {item.location.split(",")[0]}
                                           </Badge>
                                       </div>
                                   </CardHeader>
                                   <CardContent>
-                                      <p className="line-clamp-2">
-                                          {pet.description}
+                                      <p className="line-clamp-2 text-sm text-muted-foreground">
+                                          {item.description}
                                       </p>
-                                      <div className="mt-2 flex flex-wrap gap-1">
-                                          {pet.traits
-                                              .slice(0, 3)
-                                              .map((trait, index) => (
-                                                  <Badge
-                                                      key={index}
-                                                      variant="outline"
-                                                      className="rounded-full"
-                                                  >
-                                                      {trait}
-                                                  </Badge>
-                                              ))}
-                                          {pet.traits.length > 3 && (
-                                              <Badge
-                                                  variant="outline"
-                                                  className="rounded-full"
-                                              >
-                                                  +{pet.traits.length - 3} more
-                                              </Badge>
-                                          )}
-                                      </div>
-                                      <div className="mt-3 text-xs text-muted-foreground flex items-center">
-                                          <Calendar className="h-3 w-3 mr-1" />
-                                          Posted {pet.postedDate}
+                                      <div className="mt-2 flex items-center text-xs text-muted-foreground">
+                                          <Tag className="h-3 w-3 mr-1" />
+                                          {item.category}
                                       </div>
                                   </CardContent>
                                   <CardFooter className="flex justify-between">
                                       <Button
                                           variant="outline"
                                           size="sm"
-                                          className="gap-1 rounded-full h-9 px-3 shadow-xs hover:shadow-sm"
+                                          className="rounded-full h-9 px-3 shadow-xs hover:shadow-sm"
                                       >
-                                          <Mail className="h-4 w-4 mr-1" />
-                                          Contact
+                                          Message Seller
                                       </Button>
                                       <Button
                                           size="sm"
-                                          className="gap-1 rounded-full h-9 px-3 shadow-xs hover:shadow-sm"
+                                          className="rounded-full h-9 px-3 shadow-xs hover:shadow-sm"
                                       >
-                                          <Heart className="h-4 w-4 mr-1" />
-                                          Adopt
+                                          View Details
                                       </Button>
                                   </CardFooter>
                               </Card>
@@ -562,8 +552,7 @@ export function AdoptionPage() {
                       ) : (
                           <div className="col-span-full text-center py-12">
                               <p className="text-muted-foreground">
-                                  No pets match your filters. Try adjusting your
-                                  criteria.
+                                  No items match your search criteria.
                               </p>
                               <Button
                                   variant="outline"
@@ -577,136 +566,119 @@ export function AdoptionPage() {
                   </div>
               </TabsContent>
 
-              <TabsContent value="list" className="mt-6">
+              <TabsContent value="sell" className="mt-6">
                   <Card className="rounded-2xl border-2 shadow-xs hover:shadow-md transition-shadow duration-300">
                       <CardHeader>
-                          <CardTitle>List Your Pet for Adoption</CardTitle>
+                          <CardTitle>List an Item for Sale</CardTitle>
                       </CardHeader>
                       <CardContent>
                           <form className="space-y-4">
-                              <div className="grid gap-4 sm:grid-cols-2">
-                                  <div className="space-y-2">
-                                      <Label htmlFor="pet-name">Pet Name</Label>
-                                      <Input
-                                          id="pet-name"
-                                          placeholder="Enter pet name"
-                                          className="rounded-full"
-                                      />
-                                  </div>
-                                  <div className="space-y-2">
-                                      <Label htmlFor="pet-species">
-                                          Species
-                                      </Label>
-                                      <Select>
-                                          <SelectTrigger
-                                              id="pet-species"
-                                              className="rounded-full w-full"
-                                          >
-                                              <SelectValue placeholder="Select species" />
-                                          </SelectTrigger>
-                                          <SelectContent className="rounded-xl">
-                                              <SelectItem value="dog">
-                                                  Dog
-                                              </SelectItem>
-                                              <SelectItem value="cat">
-                                                  Cat
-                                              </SelectItem>
-                                              <SelectItem value="rabbit">
-                                                  Rabbit
-                                              </SelectItem>
-                                              <SelectItem value="bird">
-                                                  Bird
-                                              </SelectItem>
-                                              <SelectItem value="other">
-                                                  Other
-                                              </SelectItem>
-                                          </SelectContent>
-                                      </Select>
-                                  </div>
-                              </div>
-
-                              <div className="grid gap-4 sm:grid-cols-3">
-                                  <div className="space-y-2">
-                                      <Label htmlFor="pet-breed">Breed</Label>
-                                      <Input
-                                          id="pet-breed"
-                                          placeholder="Enter breed"
-                                          className="rounded-full"
-                                      />
-                                  </div>
-                                  <div className="space-y-2">
-                                      <Label htmlFor="pet-age">
-                                          Age (years)
-                                      </Label>
-                                      <Input
-                                          id="pet-age"
-                                          type="number"
-                                          min="0"
-                                          placeholder="Enter age"
-                                          className="rounded-full"
-                                      />
-                                  </div>
-                                  <div className="space-y-2">
-                                      <Label htmlFor="pet-gender">Gender</Label>
-                                      <Select>
-                                          <SelectTrigger
-                                              id="pet-gender"
-                                              className="rounded-full w-full"
-                                          >
-                                              <SelectValue placeholder="Select gender" />
-                                          </SelectTrigger>
-                                          <SelectContent className="rounded-xl">
-                                              <SelectItem value="Male">
-                                                  Male
-                                              </SelectItem>
-                                              <SelectItem value="Female">
-                                                  Female
-                                              </SelectItem>
-                                          </SelectContent>
-                                      </Select>
-                                  </div>
-                              </div>
-
                               <div className="space-y-2">
-                                  <Label htmlFor="pet-description">
-                                      Description
-                                  </Label>
-                                  <Textarea
-                                      id="pet-description"
-                                      placeholder="Describe your pet's personality, habits, and why they need a new home..."
-                                      className="min-h-[100px] rounded-xl"
+                                  <Label htmlFor="item-title">Item Title</Label>
+                                  <Input
+                                      id="item-title"
+                                      placeholder="Enter a descriptive title"
+                                      className="rounded-full"
                                   />
                               </div>
 
                               <div className="grid gap-4 sm:grid-cols-2">
                                   <div className="space-y-2">
-                                      <Label htmlFor="pet-location">
-                                          Location
+                                      <Label htmlFor="item-price">
+                                          Price ($)
                                       </Label>
                                       <Input
-                                          id="pet-location"
-                                          placeholder="City, State"
+                                          id="item-price"
+                                          type="number"
+                                          min="0"
+                                          step="0.01"
+                                          placeholder="0.00"
                                           className="rounded-full"
                                       />
                                   </div>
                                   <div className="space-y-2">
-                                      <Label htmlFor="pet-contact">
-                                          Contact Phone
+                                      <Label htmlFor="item-category">
+                                          Category
+                                      </Label>
+                                      <Select>
+                                          <SelectTrigger
+                                              id="item-category"
+                                              className="rounded-full w-full"
+                                          >
+                                              <SelectValue placeholder="Select category" />
+                                          </SelectTrigger>
+                                          <SelectContent className="rounded-xl">
+                                              <SelectItem value="food">
+                                                  Food & Treats
+                                              </SelectItem>
+                                              <SelectItem value="toys">
+                                                  Toys
+                                              </SelectItem>
+                                              <SelectItem value="accessories">
+                                                  Accessories
+                                              </SelectItem>
+                                              <SelectItem value="beds">
+                                                  Beds & Furniture
+                                              </SelectItem>
+                                              <SelectItem value="grooming">
+                                                  Grooming Supplies
+                                              </SelectItem>
+                                              <SelectItem value="health">
+                                                  Health & Wellness
+                                              </SelectItem>
+                                          </SelectContent>
+                                      </Select>
+                                  </div>
+                              </div>
+
+                              <div className="grid gap-4 sm:grid-cols-2">
+                                  <div className="space-y-2">
+                                      <Label htmlFor="item-condition">
+                                          Condition
+                                      </Label>
+                                      <Select>
+                                          <SelectTrigger
+                                              id="item-condition"
+                                              className="rounded-full w-full"
+                                          >
+                                              <SelectValue placeholder="Select condition" />
+                                          </SelectTrigger>
+                                          <SelectContent className="rounded-xl">
+                                              <SelectItem value="new">
+                                                  New
+                                              </SelectItem>
+                                              <SelectItem value="likeNew">
+                                                  Like New
+                                              </SelectItem>
+                                              <SelectItem value="good">
+                                                  Good
+                                              </SelectItem>
+                                              <SelectItem value="fair">
+                                                  Fair
+                                              </SelectItem>
+                                          </SelectContent>
+                                      </Select>
+                                  </div>
+                                  <div className="space-y-2">
+                                      <Label htmlFor="item-location">
+                                          Location
                                       </Label>
                                       <Input
-                                          id="pet-contact"
-                                          placeholder="Your phone number"
+                                          id="item-location"
+                                          placeholder="City, State"
                                           className="rounded-full"
                                       />
                                   </div>
                               </div>
 
                               <div className="space-y-2">
-                                  <Label htmlFor="pet-traits">Pet Traits</Label>
-                                  <Input
-                                      id="pet-traits"
-                                      placeholder="e.g., Friendly, Trained, Good with kids (comma separated)"
-                                      className="rounded-full"
+                                  <Label htmlFor="item-description">
+                                      Description
+                                  </Label>
+                                  <Textarea
+                                      id="item-description"
+                                      placeholder="Describe your item in detail..."
+                                      className="min-h-[100px] rounded-xl"
                                   />
                               </div>
 
@@ -727,24 +699,21 @@ export function AdoptionPage() {
                                   </div>
                               </div>
 
-                              <div className="flex items-center space-x-2">
-                                  <input
-                                      type="checkbox"
-                                      id="urgent-case"
-                                      className="rounded"
-                                  />
-                                  <Label
-                                      htmlFor="urgent-case"
-                                      className="text-sm font-normal"
-                                  >
-                                      This is an urgent adoption case
+                              <div className="space-y-2">
+                                  <Label htmlFor="item-tags">
+                                      Tags (Optional)
                                   </Label>
+                                  <Input
+                                      id="item-tags"
+                                      placeholder="e.g., small dogs, organic, handmade (comma separated)"
+                                      className="rounded-full"
+                                  />
                               </div>
                           </form>
                       </CardContent>
                       <CardFooter>
                           <Button className="w-full rounded-full h-10 shadow-xs hover:shadow-sm">
-                              Submit Adoption Listing
+                              List Item for Sale
                           </Button>
                       </CardFooter>
                   </Card>

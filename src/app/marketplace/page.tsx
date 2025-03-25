@@ -1,16 +1,16 @@
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { WalkBuddyPage } from "@/components/walk-buddy-page";
+import { MarketplacePage } from "@/components/marketplace-page";
 import { Suspense } from "react";
-import { WalkBuddySkeleton } from "@/components/loading-skeleton";
+import { MarketplaceSkeleton } from "@/components/loading-skeleton";
 
-export default function WalkBuddy() {
+export default function Marketplace() {
     return (
         <div className="flex min-h-screen flex-col">
             <SiteHeader />
             <main className="flex-1 container py-6">
-                <Suspense fallback={<WalkBuddySkeleton />}>
-                    <WalkBuddyPage />
+                <Suspense fallback={<MarketplaceSkeleton />}>
+                    <MarketplacePage />
                 </Suspense>
             </main>
             <SiteFooter />

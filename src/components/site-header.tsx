@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Home, PawPrintIcon as Paw, Search, MapPin, Sun, Moon, Heart, Stethoscope } from "lucide-react"
+import { Home, PawPrintIcon as Paw, Search, MapPin, Sun, Moon, Heart, Stethoscope, ShoppingBag } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useState, useEffect } from "react"
@@ -55,6 +55,11 @@ export function SiteHeader() {
       name: "Adoption",
       href: "/adoption",
       icon: Paw,
+    },
+    {
+      name: "Marketplace",
+      href: "/marketplace",
+      icon: ShoppingBag,
     },
     {
       name: "Mating",
@@ -156,7 +161,22 @@ export function SiteHeader() {
               <NotificationsPopover />
             </>
           ) : (
-            <NotificationsPopover />
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                asChild
+                className={cn(
+                  "rounded-full h-10 w-10 flex items-center justify-center",
+                  pathname.startsWith("/marketplace") && "bg-primary/10 text-primary",
+                )}
+              >
+                <Link href="/marketplace">
+                  <ShoppingBag className="h-5 w-5" />
+                </Link>
+              </Button>
+              <NotificationsPopover />
+            </>
           )}
 
           <DropdownMenu>

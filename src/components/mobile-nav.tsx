@@ -8,6 +8,11 @@ import { cn } from "@/lib/utils"
 export function MobileNav() {
   const pathname = usePathname()
 
+  // Hide the mobile nav on auth pages
+  if (pathname?.startsWith("/auth/")) {
+    return null
+  }
+
   const navItems = [
     {
       name: "Home",
@@ -20,14 +25,14 @@ export function MobileNav() {
       icon: Paw,
     },
     {
-      name: "Walk Buddy",
-      href: "/walk-buddy",
-      icon: MapPin,
-    },
-    {
       name: "Mating",
       href: "/mating",
       icon: Heart,
+    },
+    {
+      name: "Walk Buddy",
+      href: "/walk-buddy",
+      icon: MapPin,
     },
     {
       name: "Vets",
@@ -40,7 +45,7 @@ export function MobileNav() {
     <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60 border-t">
       <div className="flex items-center justify-around h-16">
         {navItems.map((item) => {
-          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+          const isActive = item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href)
 
           return (
             <Link
