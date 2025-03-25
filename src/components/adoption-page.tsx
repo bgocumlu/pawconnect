@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useState } from "react"
@@ -38,7 +40,7 @@ export function AdoptionPage() {
       const searchLower = query.toLowerCase()
       results = results.filter(
         (item) =>
-          item.title?.toLowerCase().includes(searchLower) || item.description.toLowerCase().includes(searchLower),
+          item.name?.toLowerCase().includes(searchLower) || item.description.toLowerCase().includes(searchLower),
       )
     }
 

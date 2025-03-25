@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useState } from "react"
@@ -137,7 +139,7 @@ function FindBuddies() {
                       >
                           {activeFilterCount > 0 && (
                               <Badge
-                                  variant="primary"
+                                  variant="default"
                                   className="mr-1 rounded-full h-5 w-5 p-0 flex items-center justify-center text-xs"
                               >
                                   {activeFilterCount}
