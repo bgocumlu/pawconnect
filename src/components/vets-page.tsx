@@ -282,7 +282,7 @@ export function VetsPage() {
                     className="rounded-2xl border-2 overflow-hidden transition-all duration-300 hover:shadow-md"
                   >
                     <div className="flex flex-col md:flex-row">
-                      <div className="relative w-full md:w-1/4 h-48 md:h-auto">
+                      <div className="relative w-full md:w-1/4 h-48 md:h-auto -mt-6 -mb-6">
                         <Image
                           src={vet.image || "/placeholder.svg?height=200&width=200"}
                           alt={vet.name}

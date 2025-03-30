@@ -366,7 +366,7 @@ export function MarketplacePage() {
                   key={item.id}
                   className="group overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-md hover:border-primary/30"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-54 overflow-hidden -mt-6">
                     <Image
                       src={item.image || "/placeholder.svg?height=200&width=300"}
                       alt={item.title}

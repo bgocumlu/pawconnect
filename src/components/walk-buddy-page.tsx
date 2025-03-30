@@ -399,7 +399,7 @@ function WalkEvents() {
             key={event.id}
             className="rounded-2xl border-2 overflow-hidden transition-all duration-300 hover:shadow-md group"
           >
-            <div className="relative h-40">
+            <div className="relative h-46 -mt-6">
               <Image
                 src={event.image || "/placeholder.svg?height=200&width=400"}
                 alt={event.title}

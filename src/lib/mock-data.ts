@@ -261,7 +261,7 @@ export const walkBuddies = [
     avatar: "/placeholder.svg",
     location: "Marina District, San Francisco",
     distance: 5,
-    bio: "Evening dog walker with two friendly Labradors. Love meeting new dogs and their humans!",
+    bio: "Evening dog walker with two friendly Labradors. Love meeting new dogs and their humans! Let's connect!",
     petType: "dog",
     pets: [
       {

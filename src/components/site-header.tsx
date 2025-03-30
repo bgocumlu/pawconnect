@@ -197,7 +197,7 @@ export function SiteHeader() {
                 </Link>
               </Button>
               {/* Lost Pets */}
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="icon"
                 asChild
@@ -209,7 +209,7 @@ export function SiteHeader() {
                 <Link href="/lost-pets">
                   <AlertTriangle className="h-5 w-5" />
                 </Link>
-              </Button>
+              </Button> */}
 
               <NotificationsPopover />
             </>

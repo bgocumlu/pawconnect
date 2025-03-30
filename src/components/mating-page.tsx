@@ -326,7 +326,7 @@ export function MatingPage() {
             {filteredPets.length > 0 ? (
               filteredPets.map((pet) => (
                 <Card key={pet.id} className="pet-card group">
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-54 overflow-hidden -mt-6">
                     <Image
                       src={pet.image || "/placeholder.svg?height=200&width=300"}
                       alt={pet.name}
