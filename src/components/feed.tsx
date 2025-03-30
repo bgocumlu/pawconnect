@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useState } from "react"
@@ -36,7 +36,7 @@ export function Feed() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Card className="mb-6 rounded-2xl border-2 shadow-md hover:shadow-lg transition-shadow duration-300 bg-linear-to-r from-background to-muted/20">
+      <Card className="mb-6 rounded-2xl border-2 shadow-md hover:shadow-lg bg-linear-to-r from-background to-muted/20">
         <CardHeader className="pb-0 pt-4">
           <div className="flex items-start gap-3">
             <Avatar className="border-2 border-primary/20 h-12 w-12 shadow-xs">
@@ -82,7 +82,7 @@ export function Feed() {
       </Card>
 
       <Tabs defaultValue="for-you" className="mb-6">
-        <TabsList className="grid w-full grid-cols-2 rounded-full p-1">
+        <TabsList className="grid w-full grid-cols-2 rounded-full">
           <TabsTrigger value="for-you" onClick={() => setActiveTab("for-you")} className="rounded-full">
             For You
           </TabsTrigger>
@@ -147,7 +147,7 @@ function PostCard({
         </div>
         <p className="pt-3">{post.content}</p>
       </CardHeader>
-      <CardContent className="pb-3">
+      <CardContent className="">
         {post.image && (
           <div className="relative rounded-xl overflow-hidden group">
             <Image
@@ -155,7 +155,7 @@ function PostCard({
               alt="Post image"
               width={600}
               height={400}
-              className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full object-cover"
               style={{ maxHeight: "400px" }}
             />
           </div>

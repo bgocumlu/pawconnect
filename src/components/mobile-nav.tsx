@@ -52,11 +52,18 @@ export function MobileNav() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center w-full h-full transition-colors",
+                "flex flex-col items-center justify-center w-full h-full transition-colors duration-150",
                 isActive ? "text-primary" : "text-muted-foreground hover:text-foreground",
               )}
             >
-              <item.icon className={cn("h-5 w-5 mb-1", isActive ? "text-primary" : "")} />
+              <div
+                className={cn(
+                  "flex items-center justify-center h-8 w-8 rounded-full mb-1",
+                  isActive && "bg-primary/10",
+                )}
+              >
+                <item.icon className={cn("h-5 w-5", isActive ? "text-primary" : "")} />
+              </div>
               <span className="text-xs font-medium">{item.name}</span>
             </Link>
           )

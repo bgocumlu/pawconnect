@@ -9,21 +9,21 @@ import { use } from "react";
 type Params = Promise<{ id: string }>;
 
 export default function ConversationPage(props: { params: Params }) {
-    const params = use(props.params);
-    const conversation = conversations.find((conv) => conv.id === params.id);
+  const params = use(props.params);
+  const conversation = conversations.find((conv) => conv.id === params.id)
 
-    if (!conversation) {
-        notFound();
-    }
+  if (!conversation) {
+    notFound()
+  }
 
-    return (
-        <div className="flex min-h-screen flex-col bg-background">
-            <SiteHeader />
-            <main className="flex-1 container py-6">
-                <MessageConversation conversation={conversation} />
-            </main>
-            <SiteFooter />
-        </div>
-    );
+  return (
+    <div className="flex min-h-screen flex-col bg-background">
+      <SiteHeader />
+      <main className="flex-1 container py-6">
+        <MessageConversation conversation={conversation} />
+      </main>
+      <SiteFooter />
+    </div>
+  )
 }
 

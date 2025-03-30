@@ -1,10 +1,10 @@
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { UserProfile } from "@/components/user-profile";
-import { notFound } from "next/navigation";
-import { users } from "@/lib/mock-data";
-import { Suspense } from "react";
-import { ProfileSkeleton } from "@/components/loading-skeleton";
+import { SiteHeader } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer"
+import { UserProfile } from "@/components/user-profile"
+import { notFound } from "next/navigation"
+import { users } from "@/lib/mock-data"
+import { Suspense } from "react"
+import { ProfileSkeleton } from "@/components/loading-skeleton"
 
 import { use } from "react";
 
@@ -35,3 +35,4 @@ export default function ProfilePage(props: { params: Params }) {
         </div>
     );
 }
+

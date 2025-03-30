@@ -1,17 +1,13 @@
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { MatingPage } from "@/components/mating-page"
-import { Suspense } from "react"
-import { MatingPageSkeleton } from "@/components/loading-skeleton"
+import { LoadingSkeletonDemo } from "@/components/loading-skeleton-demo"
 
-export default function Mating() {
+export default function SkeletonDemoPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1 container py-6">
-        <Suspense fallback={<MatingPageSkeleton />}>
-          <MatingPage />
-        </Suspense>
+        <LoadingSkeletonDemo />
       </main>
       <SiteFooter />
     </div>

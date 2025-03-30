@@ -3,7 +3,18 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Home, PawPrintIcon as Paw, Search, MapPin, Sun, Moon, Heart, Stethoscope, ShoppingBag } from "lucide-react"
+import {
+  Home,
+  PawPrintIcon as Paw,
+  Search,
+  MapPin,
+  Sun,
+  Moon,
+  Heart,
+  Stethoscope,
+  ShoppingBag,
+  AlertTriangle,
+} from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useState, useEffect } from "react"
@@ -62,6 +73,11 @@ export function SiteHeader() {
       icon: ShoppingBag,
     },
     {
+      name: "Lost Pets",
+      href: "/lost-pets",
+      icon: AlertTriangle,
+    },
+    {
       name: "Mating",
       href: "/mating",
       icon: Heart,
@@ -95,7 +111,7 @@ export function SiteHeader() {
               <Input
                 type="search"
                 placeholder="Search pets and people..."
-                className="w-full pl-10 rounded-full bg-muted h-10"
+                className="w-full pl-10 rounded-full bg-muted/50 h-10 border-primary/10 focus-visible:ring-primary/30"
               />
             </div>
           </div>
@@ -113,7 +129,12 @@ export function SiteHeader() {
         ) : isMobile && isSearchOpen ? (
           <div className="flex-1 flex mx-2">
             <div className="relative w-full">
-              <Input type="search" placeholder="Search..." className="w-full pr-8 rounded-full" autoFocus />
+              <Input
+                type="search"
+                placeholder="Search..."
+                className="w-full pr-8 rounded-full border-primary/10 focus-visible:ring-primary/30"
+                autoFocus
+              />
               <Button
                 variant="ghost"
                 size="icon"
@@ -148,7 +169,7 @@ export function SiteHeader() {
                     size="icon"
                     asChild
                     className={cn(
-                      "rounded-full h-10 w-10 flex items-center justify-center",
+                      "rounded-full h-10 w-10 flex items-center justify-center transition-colors duration-150",
                       isActive && "bg-primary/10 text-primary",
                     )}
                   >
@@ -175,6 +196,21 @@ export function SiteHeader() {
                   <ShoppingBag className="h-5 w-5" />
                 </Link>
               </Button>
+              {/* Lost Pets */}
+              <Button
+                variant="ghost"
+                size="icon"
+                asChild
+                className={cn(
+                  "rounded-full h-10 w-10 flex items-center justify-center",
+                  pathname.startsWith("/lost-pets") && "bg-primary/10 text-primary",
+                )}
+              >
+                <Link href="/lost-pets">
+                  <AlertTriangle className="h-5 w-5" />
+                </Link>
+              </Button>
+
               <NotificationsPopover />
             </>
           )}

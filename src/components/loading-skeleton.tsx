@@ -464,3 +464,66 @@ export function MatingPageSkeleton() {
   )
 }
 
+export function LostPetsSkeleton() {
+  return (
+    <div className="max-w-7xl mx-auto">
+      <div className="mb-6">
+        <Skeleton className="h-10 w-48 mb-2" />
+        <Skeleton className="h-5 w-full max-w-2xl" />
+      </div>
+
+      <div className="flex justify-center w-full mb-6">
+        <Skeleton className="h-10 w-full max-w-md rounded-full" />
+      </div>
+
+      <Card className="mb-6 rounded-2xl border-2">
+        <CardHeader className="pb-2">
+          <div className="flex justify-between">
+            <Skeleton className="h-6 w-32" />
+            <Skeleton className="h-8 w-24 rounded-full" />
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            <Skeleton className="h-10 w-full rounded-full" />
+            <Skeleton className="h-10 w-full rounded-full" />
+            <Skeleton className="h-10 w-full rounded-full" />
+            <Skeleton className="h-10 w-full rounded-full" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <Card key={i} className="rounded-2xl border-2 overflow-hidden">
+            <Skeleton className="h-48 w-full" />
+            <CardHeader>
+              <div className="flex justify-between items-start">
+                <div>
+                  <Skeleton className="h-6 w-24 mb-1" />
+                  <Skeleton className="h-4 w-32" />
+                </div>
+                <Skeleton className="h-6 w-16 rounded-full" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-4 w-32 mb-2" />
+              <Skeleton className="h-16 w-full mb-2" />
+              <div className="flex flex-wrap gap-1 mb-2">
+                <Skeleton className="h-5 w-16 rounded-full" />
+                <Skeleton className="h-5 w-16 rounded-full" />
+                <Skeleton className="h-5 w-16 rounded-full" />
+              </div>
+              <Skeleton className="h-4 w-32" />
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Skeleton className="h-9 w-24 rounded-full" />
+              <Skeleton className="h-9 w-24 rounded-full" />
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </div>
+  )
+}
+

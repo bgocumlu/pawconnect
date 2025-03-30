@@ -141,7 +141,7 @@ export function UserProfile({ user }: { user: any }) {
         <div className="paw-print-divider my-8"></div>
 
         <Tabs defaultValue="posts" className="mt-8">
-          <TabsList className="grid w-full grid-cols-3 rounded-full p-1">
+          <TabsList className="grid w-full grid-cols-3 rounded-full">
             <TabsTrigger value="posts" className="rounded-full">
               Posts
             </TabsTrigger>
