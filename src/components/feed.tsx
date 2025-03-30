@@ -147,7 +147,7 @@ function PostCard({
         </div>
         <p className="pt-3">{post.content}</p>
       </CardHeader>
-      <CardContent className="">
+      <CardContent className="-mb-4">
         {post.image && (
           <div className="relative rounded-xl overflow-hidden group">
             <Image
