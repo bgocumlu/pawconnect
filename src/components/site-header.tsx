@@ -95,7 +95,7 @@ export function SiteHeader() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="flex items-center mr-4">
           <Link href="/" className="flex items-center space-x-2">
@@ -117,7 +117,22 @@ export function SiteHeader() {
           </div>
         )}
 
-        {isMobile && !isSearchOpen ? (
+        {isMobile && isSearchOpen ? (
+          <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm animate-fade-in flex">
+            <div className="container h-16 flex items-center">
+              <div className="relative w-full max-w-md mx-auto">
+                <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search pets and people..."
+                  className="w-full pl-10 rounded-full h-10 text-base border-primary/20 focus-visible:ring-primary/30"
+                  autoFocus
+                  onBlur={() => setIsSearchOpen(false)}
+                />
+              </div>
+            </div>
+          </div>
+        ) : isMobile && !isSearchOpen ? (
           <Button
             variant="ghost"
             size="icon"
@@ -126,25 +141,6 @@ export function SiteHeader() {
           >
             <Search className="h-5 w-5" />
           </Button>
-        ) : isMobile && isSearchOpen ? (
-          <div className="flex-1 flex mx-2">
-            <div className="relative w-full">
-              <Input
-                type="search"
-                placeholder="Search..."
-                className="w-full pr-8 rounded-full border-primary/10 focus-visible:ring-primary/30"
-                autoFocus
-              />
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-0 top-0 h-10 w-10 flex items-center justify-center"
-                onClick={() => setIsSearchOpen(false)}
-              >
-                <Search className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
         ) : null}
 
         <div className="flex items-center space-x-1 ml-auto">
@@ -210,7 +206,6 @@ export function SiteHeader() {
                   <AlertTriangle className="h-5 w-5" />
                 </Link>
               </Button> */}
-
               <NotificationsPopover />
             </>
           )}
