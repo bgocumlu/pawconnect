@@ -18,10 +18,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#161A1D" />
+        <link rel="apple-touch-icon" href="/paw-pattern.svg" />
+      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
-          <MobileNav />
+          <div>
+            <MobileNav />
+          </div>
+          {/* Spacer for iOS/PWA home indicator */}
+          <div style={{ height: 'env(safe-area-inset-bottom, 32px)' }} />
         </ThemeProvider>
       </body>
     </html>
